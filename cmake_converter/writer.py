@@ -92,7 +92,7 @@ class CMakeWriter:
                 'error'
             )
         cmake_file.write(
-            'set(PROJECT_NAME {})\n\n'.format(make_cmake_literal(context, context.project_name))
+            'Project({})\n\n'.format(make_cmake_literal(context, context.project_name))
         )
 
     @staticmethod

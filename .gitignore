@@ -37,3 +37,5 @@ _build
 #*.cmake
 CMakeLists.txt
 Utils.cmake
+
+venv/
