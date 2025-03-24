@@ -422,6 +422,11 @@ def normalize_path(context, working_path, path_to_normalize, remove_relative=Tru
             'warn1'
         )
         actual_path_name = normal_path
+
+    if os.path.splitdrive(working_path)[0] != os.path.splitdrive(actual_path_name)[0]:
+        message(context, 'file or path "{}" on different drive.'.format(actual_path_name), 'warn')
+        return actual_path_name
+
     normal_path = os.path.relpath(actual_path_name, working_path)
     if unix_slash:
         normal_path = set_unix_slash(normal_path)
@@ -505,4 +510,8 @@ def make_cmake_configuration(context, sln_configuration):
     sln_conf_arch = sln_configuration.split('|')
     genex_invalid_regex = r'[^A-Za-z0-9_]'
     sln_conf_arch[0] = escape_string(context, genex_invalid_regex, sln_conf_arch[0])
-    return "{}|{}".format(*sln_conf_arch)
+    if len(sln_conf_arch) == 2:
+        return "{}|{}".format(*sln_conf_arch)
+    else:
+        print('ERR: failed to make config {}'.format(sln_configuration[0]))
+        return sln_conf_arch[0]

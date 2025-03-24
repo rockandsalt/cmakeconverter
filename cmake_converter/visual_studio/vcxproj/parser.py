@@ -197,7 +197,8 @@ class VCXParser(Parser):
                 namespaces=self.filters['ns']
             )
             if filter_node:
-                return filter_node[0].text.replace('\\', '\\\\')
+                if filter_node[0].text:
+                    return filter_node[0].text.replace('\\', '\\\\')
 
         return ''
 
